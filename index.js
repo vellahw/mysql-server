@@ -45,7 +45,7 @@ app.post('/signup2', function(req, res){
     const input_age = req.body._age
     const input_loc = req.body._loc
 
-    console.log("id: ", input_id, "pass: ", input_pass, "name: ", input_name, "age: ", input_age, "loc: ", input_loc)
+    console.log("id: ", input_id, " pass: ", input_pass, " name: ", input_name, " age: ", input_age, " loc: ", input_loc)
 
     // DB에 저장
     const sql = `
