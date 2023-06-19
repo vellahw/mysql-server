@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up Page</title>
+    <script>
+        function check() {
+            alert("이미 존재하는 아이디입니다.")
+        }
+    </script>
 </head>
+<% if(data == 'false') { %>
+<body onload="check()">
+<% } else { %>
 <body>
+<% } %>    
     <form action="/check_id" method="get">
-        <label>ID
-            <input type="text" name="_id">
-            <input type="submit" value="아이디 중복 체크">
+        <label>ID</label>
+        <input type="text" name="_id">
+        <input type="submit" value="아이디 중복 체크">
     </form>
 </body>
 </html>

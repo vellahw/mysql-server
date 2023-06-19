@@ -33,7 +33,20 @@ app.get('/', function(req, res){
 
 // localhost:3000/signup [get]
 app.get('/signup', function(req, res){
-    res.render('signup')
+    // url에 있는 데이터는 req.query에 있다 
+    const data = req.query.result
+
+    console.log("data는요: ", data)
+    
+    let output = 0
+
+    if(data){ // true
+        output = data
+    } 
+
+    res.render('signup', {
+        data : output
+    })
 })
 
 // localhost:3000/signup2 [post]
