@@ -31,6 +31,67 @@ app.get('/', function(req, res){
     res.render('login')
 })
 
+// localhost:3000/signup [get]
+app.get('/signup', function(req, res){
+    res.render('signup')
+})
+
+// localhost:3000/login [post]
+app.post('/login', function(req, res){
+    // 유저가 보낸 데이터를 변수에 대입 & 확인
+    const input_id = req.body._id
+    const input_pass = req.body._pass
+    console.log("id: ", input_id, "pass: ", input_pass)
+
+    // user_info 테이블에서 유저가 입력한 데이터가 존재하는지 확인하기
+    const sql = `
+        select
+        *
+        from
+        user_info
+        where
+        id = ?
+        and
+        password = ?
+        `
+    // 물음표 안에 들어갈 값
+    const values = [input_id, input_pass]
+    connection.query(
+        sql,
+        values,
+        function(err, result) {
+            if(err) {
+                console.log(err)
+                res.send(err)
+            } else {
+                // mysql에서 express 서버 결과물의 데이터의 형태 (배열 안 JSON 형태)
+                /*
+                데이터가 존재하는 경우
+                  [
+                    {
+                        'id' : xxxx,
+                        'password' : xxxx,
+                        'name' : xxxx,
+                        'age' : xxxx,
+                        'log': xxxx
+                    }
+                 ] 
+                
+                데이터가 존재하지 않는 경우
+                  []
+                */
+                
+                if(result.length == 0){
+                    res.send("로그인 실패")
+                } else {
+                    res.send("로그인 성공")
+                }
+            }
+        }
+    )    
+})
+
+
 // const connection = mysql.createConnection({
 //     host : 'localhost', // 주소 = 어디에있는 mysql을 사용할 것인가 | 맥의 경우 127.0.0.1로 입력
 //     port : 3306,
