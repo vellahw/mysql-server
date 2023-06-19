@@ -5,13 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Board List</title>
     <script>
-        function write() {
-            location.href = '/write'
+        function add() {
+            location.href = '/write';
         }
     </script>
 </head>
 <body>
-    <button onclick="write()">글쓰기</button>
-    
+    <h3>글을 써보세요</h3>
+    <button onclick="add()">글쓰기</button>
+
+    <table border="1">
+        <tr>
+            <th>글 번호</th>
+            <th>글 제목</th>
+        </tr>
+       <% for(var i=0; i < data.length; i++) { %>
+        <tr>
+            <td><%= data[i]['no'] %></td>
+            <td><%= data[i]['title'] %></td>
+        </tr>
+       <% } %>     
+    </table>
 </body>
 </html>

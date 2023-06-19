@@ -140,7 +140,20 @@ app.post('/login', function(req, res){
 
 // localhost:3000/board [get]
 app.get('/board', (req, res)=>{
-    res.render('board')
+    // sql 서버에 있는 board 테이블의 정보 로드
+    const sql = `select * from board`
+
+    connection.query(sql, (err, result)=>{
+        if(err) {
+            console.log(err)
+            res.send(err)
+        } else{
+            // result 데이터의 형태 = 배열 안에 JSON
+            res.render('board', {
+                data : result
+            })
+        }
+    })
 })
 
 // localhost:3000/write [get]
