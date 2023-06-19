@@ -36,6 +36,38 @@ app.get('/signup', function(req, res){
     res.render('signup')
 })
 
+// localhost:3000/signup2 [post]
+app.post('/signup2', function(req, res){
+    // 유저가 입력한 데이터를 변수에 대입 & 확인
+    const input_id = req.body._id
+    const input_pass = req.body._pass
+    const input_name = req.body._name
+    const input_age = req.body._age
+    const input_loc = req.body._loc
+
+    console.log("id: ", input_id, "pass: ", input_pass, "name: ", input_name, "age: ", input_age, "loc: ", input_loc)
+
+    // DB에 저장
+    const sql = `
+        insert into
+        user_info
+        values
+        (?, ?, ?, ?, ?)    
+    `
+    const values = [input_id, input_pass, input_name, input_age, input_loc]
+
+    connection.query(sql, values, (err, result)=>{
+        if(err){
+            console.log(err)
+            res.send(err)
+        } else {
+            console.log(result)
+            res.redirect("/")
+
+        }
+    })
+})
+
 // localhost:3000/login [post]
 app.post('/login', function(req, res){
     // 유저가 보낸 데이터를 변수에 대입 & 확인
@@ -89,6 +121,40 @@ app.post('/login', function(req, res){
             }
         }
     )    
+})
+
+// localhost:3000/check_id [get]
+app.get('/check_id', (req, res)=> {
+    // 유저가 입력한 데이터를 변수에 대입 & 확인
+    const input_id = req.query._id
+    const input_pass = req.query._pass
+    console.log("id: ", input_id, "pass: ", input_pass)
+    
+    const sql = `
+        select
+        *
+        from
+        user_info
+        where
+        id = ?
+        `
+    const values = [input_id]
+    
+    //connection을 이용해 mysql server에 쿼리문을 실행
+    connection.query(sql, values, (err, result)=>{
+        if(err) {
+            console.log(err)
+            res.send(err)
+        } else {
+            if(!result.length){ // 0은 기본적으로 false를 리턴
+                res.render('signup2', {
+                    data : input_id
+                })
+            } else {
+                res.redirect('/signup?result=false')
+            }
+        }
+    })
 })
 
 

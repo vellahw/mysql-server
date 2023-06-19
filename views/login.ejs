@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <script>
-        document.getElementById('signUpBtn').addEventListener('click', function(){
+        function openPage() {
             location.href = '/signup'
-        })
+        }
     </script>
 </head>
 <body>
@@ -21,6 +21,6 @@
         <br>
         <input type="submit" value="로그인">
     </form>
-    <button id="signUpBtn">회원가입</button>
+    <button onclick="openPage()">회원가입</button>
 </body>
 </html>
