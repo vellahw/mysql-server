@@ -127,13 +127,58 @@ app.post('/login', function(req, res){
                 */
                 
                 if(result.length == 0){
-                    res.send("로그인 실패")
+                    // res.send("로그인 실패")
+                    res.redirect('/')
                 } else {
-                    res.send("로그인 성공")
+                    // res.send("로그인 성공")
+                    res.redirect('/board')
                 }
             }
         }
     )    
+})
+
+// localhost:3000/board [get]
+app.get('/board', (req, res)=>{
+    res.render('board')
+})
+
+// localhost:3000/write [get]
+app.get('/write', (req, res)=>{
+    res.render('write')
+})
+
+// localhost:3000/write2 [post]
+// 글쓰기 버튼 누른 후 이동하는 페이지
+app.post('/write2', (req, res)=>{
+    // 유저가 입력한 데이터를 변수에 대입 & 확인
+    const input_title = req.body._title
+    const input_content = req.body._content
+    console.log("제목 : ", input_title, " 내용: ", input_content)
+
+    // 디비 연동
+    const sql = `
+        insert
+        into
+        board (
+            title,
+            content
+        )
+        values (
+            ?,
+            ?
+        )`
+    const values= [input_title, input_content]
+
+    connection.query(sql, values, (err, result)=>{
+        if(err) {
+            console.log(err)
+            res.send(err)
+        } else{
+            console.log(result)
+            res.redirect('/board')
+        }
+    })
 })
 
 // localhost:3000/check_id [get]
