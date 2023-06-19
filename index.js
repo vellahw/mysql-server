@@ -228,6 +228,31 @@ app.get('/check_id', (req, res)=> {
     })
 })
 
+// localhost:3000/view_content [get]
+app.get('/view_content/:_no', (req, res)=>{
+    const input_no = req.params._no
+    console.log("글번호: ", input_no)
+    const sql = `
+        select *
+        from board
+        where
+        no = ?
+        `
+    const values = [input_no]
+    connection.query(sql, values, (err, result)=>{
+        if(err){
+            console.log(err);
+            res.send(err)
+        } else {
+            // result 형태 : [{ }]
+            res.render('view_content', {
+                data : result[0] // 대괄호 없애고 json 형태만 보내기
+            })
+        }
+    })    
+
+})
+
 
 // const connection = mysql.createConnection({
 //     host : 'localhost', // 주소 = 어디에있는 mysql을 사용할 것인가 | 맥의 경우 127.0.0.1로 입력

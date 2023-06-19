@@ -8,6 +8,10 @@
         function add() {
             location.href = '/write';
         }
+
+        function view(no) {
+            location.href = '/view_content/' + no
+        }
     </script>
 </head>
 <body>
@@ -22,7 +26,7 @@
        <% for(var i=0; i < data.length; i++) { %>
         <tr>
             <td><%= data[i]['no'] %></td>
-            <td><%= data[i]['title'] %></td>
+            <td onclick="view('<%= data[i].no %>')"><%= data[i]['title'] %></td>
         </tr>
        <% } %>     
     </table>
