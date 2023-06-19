@@ -26,6 +26,11 @@ const connection = mysql.createConnection({
     database :  process.env.database
 })
 
+// localhost:3000으로 요청이 들어오는 경우
+app.get('/', function(req, res){
+    res.render('login')
+})
+
 // const connection = mysql.createConnection({
 //     host : 'localhost', // 주소 = 어디에있는 mysql을 사용할 것인가 | 맥의 경우 127.0.0.1로 입력
 //     port : 3306,
